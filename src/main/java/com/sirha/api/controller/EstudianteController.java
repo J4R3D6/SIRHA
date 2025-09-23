@@ -37,59 +37,23 @@ public class EstudianteController {
     }
 
     @GetMapping("/horario/{idEstudiante}/{semestre}")
-    public ResponseEntity<?> package com.sirha.api.config;
-
-    import com.sirha.api.model.*;
-    import com.sirha.api.repository.UsuarioRepository;
-    import org.springframework.boot.CommandLineRunner;
-    import org.springframework.context.annotation.Bean;
-    import org.springframework.context.annotation.Configuration;
-
-    import java.util.Arrays;
-
-    @Configuration
-    public class DataSeeder {
-
-        @Bean
-        CommandLineRunner seedDatabase(UsuarioRepository usuarioRepository) {
-            return args -> {
-                // Crear materias
-                Materia materia1 = new Materia("MAT101", "Matemáticas I", 4);
-                Materia materia2 = new Materia("FIS101", "Física I", 3);
-
-                // Crear registro de materias
-                RegistroMaterias registro = new RegistroMaterias();
-                registro.setMaterias(Arrays.asList(materia1, materia2));
-                registro.setSemestre(1);
-
-                // Crear semestre y agregar registro
-                Semestre semestre = new Semestre();
-                semestre.setNumero(1);
-                semestre.setRegistros(Arrays.asList(registro));
-
-                // Crear estudiante
-                Estudiante estudiante = new Estudiante(
-                        "Juan",
-                        "Pérez",
-                        "juan.perez@email.com",
-                        "password123",
-                        Rol.ESTUDIANTE,
-                        Facultad.INGENIERIA
-                );
-                estudiante.setSemestres(Arrays.asList(semestre));
-
-                // Guardar en la base de datos
-                usuarioRepository.save(estudiante);
-            };
-        }
-    }(@PathVariable String idEstudiante , @PathVariable int semestre) {
+    public ResponseEntity<?> consultarHorarioPorSemestre(@PathVariable String idEstudiante, @PathVariable int semestre) {
         try {
             List<RegistroMaterias> registroMaterias = estudianteService.consultarHorarioBySemester(idEstudiante, semestre);
-            if (registroMaterias.size() > 0) {
-                return ResponseEntity.ok(registroMaterias);
-            } else {
+            if (registroMaterias.isEmpty()) {
                 return new ResponseEntity<>("No se encontro el horario", HttpStatus.NO_CONTENT);
             }
+
+            Map<String, Horario> horarioPorAcronimo = new HashMap<>();
+            for (RegistroMaterias registro : registroMaterias) {
+                Grupo grupo = registro.getGrupo();
+                if (grupo != null && grupo.getHorarios() != null && !grupo.getHorarios().isEmpty()) {
+                    String acronimo = grupo.getMateria().getAcronimo();
+                    Horario horario = grupo.getHorarios().get(0); // Primer horario
+                    horarioPorAcronimo.put(acronimo, horario);
+                }
+            }
+            return ResponseEntity.ok(horarioPorAcronimo);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }
