@@ -72,12 +72,12 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- Lombok para reducir el código boilerplate -->
+        <!-- Lombok para reducir el código boilerplate
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.42</version>
-        </dependency>
+        </dependency>-->
 
         <!-- Springdoc OpenAPI para generar la documentación Swagger UI automáticamente -->
         <dependency>

@@ -1,4 +1,4 @@
-package Clases;
+package com.sirha.api.model;
 
 public enum CarreraTipo {
 

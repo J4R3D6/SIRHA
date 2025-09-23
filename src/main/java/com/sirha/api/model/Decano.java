@@ -1,16 +1,15 @@
 package com.sirha.api.model;
 
-import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Document(collection = "usuarios")
 public class Decano extends Profesor implements GestorSolicitudes {
 
     private Facultad carrera;
+
+    public Decano() {
+        super();
+    }
 
     public Decano(String nombre, String apellido, String email, String contraseña, Facultad carrera) {
         super(nombre, apellido, email, contraseña);
@@ -24,5 +23,13 @@ public class Decano extends Profesor implements GestorSolicitudes {
 
     @Override
     public void gestionarSolicitud() {
+    }
+
+    public Facultad getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Facultad carrera) {
+        this.carrera = carrera;
     }
 }

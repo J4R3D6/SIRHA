@@ -1,13 +1,13 @@
 package com.sirha.api.model;
 
-import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Getter
-@Setter
-@NoArgsConstructor
 @Document(collection = "usuarios")
 public class Administrador extends Usuario implements GestorSolicitudes {
+
+    public Administrador() {
+        super();
+    }
 
     public Administrador(String nombre, String apellido, String email, String password) {
         super(nombre, apellido, email, password);

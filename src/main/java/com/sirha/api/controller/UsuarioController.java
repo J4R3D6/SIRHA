@@ -28,7 +28,7 @@ import java.util.Map;
  */
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
@@ -98,7 +98,7 @@ public class UsuarioController {
      */
 
     // Listar todos
-    @GetMapping("/usuarios")
+    @GetMapping("/")
     public ResponseEntity<?> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.listarUsuarios();
         if (usuarios.size() > 0) {
@@ -116,7 +116,7 @@ public class UsuarioController {
      */
 
     // Buscar por ID
-    @GetMapping("/usuario/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Usuario> obtenerPorId(@PathVariable String id) {
         return usuarioService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
@@ -131,7 +131,7 @@ public class UsuarioController {
      */
 
     // Buscar por email
-    @GetMapping("/usuario/email/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<Usuario> obtenerPorEmail(@PathVariable String email) {
         return usuarioService.obtenerPorEmail(email)
                 .map(ResponseEntity::ok)
@@ -146,7 +146,7 @@ public class UsuarioController {
      */
 
     // Buscar por Rol
-    @GetMapping("/usuarios/rol/{rol}")
+    @GetMapping("/rol/{rol}")
     public ResponseEntity<List<Usuario>> obtenerPorRol(@PathVariable String rol) {
         try {
             Rol rolEnum = Rol.valueOf(rol.toUpperCase());
@@ -168,7 +168,7 @@ public class UsuarioController {
      * @param nombre nombre del usuario
      * @return lista de {@link Usuario} si existen, lista vacía si no
      */
-    @GetMapping("/usuario/nombre/{nombre}")
+    @GetMapping("/nombre/{nombre}")
     public ResponseEntity<List<Usuario>> obtenerPorNombre(@PathVariable String nombre) {
         List<Usuario> usuarios = usuarioService.obtenerPorNombre(nombre);
         if (usuarios.isEmpty()) {
@@ -183,7 +183,7 @@ public class UsuarioController {
      * @param apellido apellido del usuario
      * @return lista de {@link Usuario} si existen, lista vacía si no
      */
-    @GetMapping("/usuario/apellido/{apellido}")
+    @GetMapping("/apellido/{apellido}")
     public ResponseEntity<List<Usuario>> obtenerPorApellido(@PathVariable String apellido) {
         List<Usuario> usuarios = usuarioService.obtenerPorApellido(apellido);
         if (usuarios.isEmpty()) {
@@ -199,7 +199,7 @@ public class UsuarioController {
      * @param apellido apellido del usuario
      * @return lista de {@link Usuario} si existen, lista vacía si no
      */
-    @GetMapping("/usuario/{nombre}/{apellido}")
+    @GetMapping("/nombre/{nombre}/{apellido}")
     public ResponseEntity<List<Usuario>> obtenerPorNombreYApellido(@PathVariable String nombre,
             @PathVariable String apellido) {
         List<Usuario> usuarios = usuarioService.obtenerPorNombreYApellido(nombre, apellido);
