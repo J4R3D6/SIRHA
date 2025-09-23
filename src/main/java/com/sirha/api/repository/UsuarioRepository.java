@@ -19,4 +19,6 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
     List<Usuario> findByNombreAndApellido(String nombre, String apellido);
 
     List<Usuario> findByRol(Rol rol);
+
+    List<Usuario> findAll();
 }
