@@ -21,15 +21,22 @@ public class Decano extends Profesor implements GestorSolicitudes {
         this.carrera = carrera;
     }
 
-    @Override
-    public void gestionarSolicitud() {
-    }
-
     public Facultad getCarrera() {
         return carrera;
     }
 
     public void setCarrera(Facultad carrera) {
         this.carrera = carrera;
+    }
+
+
+    @Override
+    public void agregarSolicitud(Solicitud solicitud) {
+
+    }
+
+    @Override
+    public void gestionarSolicitud(Solicitud solicitud, String accion) {
+
     }
 }

@@ -17,8 +17,14 @@ public class Administrador extends Usuario implements GestorSolicitudes {
         super(nombre, apellido, email, password, rol);
     }
 
+
     @Override
-    public void gestionarSolicitud() {
-        // TODO: Implementar lógica de gestión de solicitudes
+    public void agregarSolicitud(Solicitud solicitud) {
+
+    }
+
+    @Override
+    public void gestionarSolicitud(Solicitud solicitud, String accion) {
+
     }
 }

@@ -1,8 +1,8 @@
 package com.sirha.api.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 
 @Document(collection = "usuarios")
@@ -64,5 +64,22 @@ public class Estudiante extends Usuario {
 
 	public void addSolicitud(Solicitud solicitud) {
 		this.solicitudes.add(solicitud);
+	}
+
+
+	public List<RegistroMaterias> getRegistrosBySemestre(int semestre) {
+		List<RegistroMaterias> registros = semestres.get(semestre-1).getRegistros();
+		return registros;
+	}
+	public Map<String, Semaforo> getSemaforo() {
+		HashMap<String, Semaforo> semaforo = new HashMap<>();
+		for (Semestre semestre : semestres) {
+			for (RegistroMaterias registro : semestre.getRegistros()) {
+				String nombre = registro.getMateria().getNombre();
+				Semaforo estado = registro.getEstado();
+				semaforo.put(nombre, estado);
+			}
+		}
+		return semaforo;
 	}
 }
