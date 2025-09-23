@@ -12,8 +12,6 @@ public class Estudiante extends Usuario {
 
 	private List<Semestre> semestres = new ArrayList<>();
 
-	private List<Grupo> grupos = new ArrayList<>();
-
 	private List<Solicitud> solicitudes = new ArrayList<Solicitud>();
 
 	public Estudiante() {
@@ -46,13 +44,6 @@ public class Estudiante extends Usuario {
 		this.semestres = semestres;
 	}
 
-	public List<Grupo> getGrupos() {
-		return grupos;
-	}
-
-	public void setGrupos(List<Grupo> grupos) {
-		this.grupos = grupos;
-	}
 
 	public List<Solicitud> getSolicitudes() {
 		return solicitudes;
@@ -75,7 +66,7 @@ public class Estudiante extends Usuario {
 		HashMap<String, Semaforo> semaforo = new HashMap<>();
 		for (Semestre semestre : semestres) {
 			for (RegistroMaterias registro : semestre.getRegistros()) {
-				String nombre = registro.getMateria().getNombre();
+				String nombre = registro.getGrupo().getMateria().getNombre();
 				Semaforo estado = registro.getEstado();
 				semaforo.put(nombre, estado);
 			}
