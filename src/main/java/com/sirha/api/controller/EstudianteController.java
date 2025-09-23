@@ -37,20 +37,29 @@ public class EstudianteController {
     }
 
     @GetMapping("/horario/{idEstudiante}/{semestre}")
-    public ResponseEntity<?>consultarHorarioBySemester(@PathVariable String idEstudiante , @PathVariable int semestre) {
+    public ResponseEntity<?> consultarHorarioPorSemestre(@PathVariable String idEstudiante, @PathVariable int semestre) {
         try {
             List<RegistroMaterias> registroMaterias = estudianteService.consultarHorarioBySemester(idEstudiante, semestre);
-            if (registroMaterias.size() > 0) {
-                return ResponseEntity.ok(registroMaterias);
-            } else {
+            if (registroMaterias.isEmpty()) {
                 return new ResponseEntity<>("No se encontro el horario", HttpStatus.NO_CONTENT);
             }
+
+            Map<String, List<Horario>> horariosPorMateria = new HashMap<>();
+            for (RegistroMaterias registro : registroMaterias) {
+                Grupo grupo = registro.getGrupo();
+                if (grupo != null && grupo.getHorarios() != null && !grupo.getHorarios().isEmpty()) {
+                    String nombreMateria = grupo.getMateria().getNombre();
+                    List<Horario> horarios = grupo.getHorarios();
+                    horariosPorMateria.put(nombreMateria, horarios);
+                }
+            }
+            return ResponseEntity.ok(horariosPorMateria);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }
     }
 
-    @GetMapping("/semaforo/{idEstudiante}/{semestre}")
+    @GetMapping("/semaforo/{idEstudiante}")
     public ResponseEntity<?> consultarSemaforoAcademico(@PathVariable String idEstudiante) {
         try {
             Map<String, Semaforo> semaforo = estudianteService.consultarSemaforoAcademico(idEstudiante);

@@ -4,7 +4,7 @@ public class RegistroMaterias {
 
 	private Semaforo estado;
 
-	private Materia materia;
+	private Grupo grupo;
 
 	public Semaforo getEstado() {
 		return estado;
@@ -14,12 +14,12 @@ public class RegistroMaterias {
 		this.estado = estado;
 	}
 
-	public Materia getMateria() {
-		return materia;
+	public Grupo getGrupo() {
+		return grupo;
 	}
 
-	public void setMateria(Materia materia) {
-		this.materia = materia;
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 		this.estado = Semaforo.AZUL;
 	}
 
