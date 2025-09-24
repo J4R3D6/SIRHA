@@ -36,17 +36,17 @@ public class CarreraService {
             if (carreraOptName.isPresent()) {
                 throw new IllegalArgumentException("Carrera con nombre" + dto.getCodigo() + " ya existe");
             }
-            Carrera carrera = new ImpCarreraBuilder()
-                    .nombre(Facultad.valueOf(dto.getNombre().toUpperCase()))
-                    .codigo(dto.getCodigo())
-                    .duracionSemestres(dto.getDuracionSemestres())
-                    .creditosTotales(dto.getCreditosTotales())
-                    .build();
-            return carreraRepository.insert(carrera);
         }catch (Exception e){
             throw new IllegalArgumentException("tipo no válido: " + dto.getNombre() + ", formas correctas son: " +
                     "INGENIERIA_SISTEMAS, INGENIERIA_CIVIL, ADMINISTRACION.");
         }
+        Carrera carrera = new ImpCarreraBuilder()
+                .nombre(Facultad.valueOf(dto.getNombre().toUpperCase()))
+                .codigo(dto.getCodigo())
+                .duracionSemestres(dto.getDuracionSemestres())
+                .creditosTotales(dto.getCreditosTotales())
+                .build();
+        return carreraRepository.insert(carrera);
    }
 
     public Materia addMateria(@Valid MateriaDTO dto, String codigoCarrera) {

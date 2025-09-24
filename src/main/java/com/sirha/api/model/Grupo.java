@@ -1,26 +1,54 @@
 package com.sirha.api.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "grupos")
 public class Grupo {
+
 
 	private String id;
 
+    @NotNull
+    @NotBlank
 	private int capacidad = 0;
 
+    @NotNull
+    @NotBlank
 	private int cantidadInscritos;
 
+    @NotNull
+    @NotBlank
 	private boolean estaCompleto;
 
+    @NotNull
+    @NotBlank
 	private List<Horario> horarios = new ArrayList<>();
 
-	private List<String> estudiantesId = new ArrayList<String>();
-
+    @NotNull
+    @NotBlank
 	private Materia materia;
+
+    private List<String> estudiantesId = new ArrayList<String>();
+
+    private Profesor profesor;
 
 	public Grupo() {
 	}
+
+    public Grupo(Materia materia, int capacidad, List<Horario> horarios) {
+        this.materia = materia;
+        this.capacidad = capacidad;
+        this.horarios = horarios;
+        this.cantidadInscritos = 0;
+        this.estaCompleto = false;
+        this.estudiantesId = new ArrayList<String>();
+    }
 
 	public Materia getMateria() {
 		return materia;
@@ -77,4 +105,26 @@ public class Grupo {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+    public void addEstudiante(String estudianteId) {
+        this.estudiantesId.add(estudianteId);
+        this.cantidadInscritos++;
+        if (this.cantidadInscritos >= this.capacidad) {
+            this.estaCompleto = true;
+        }
+    }
+
+    public void removeEstudiante(String estudianteId) {
+        this.estudiantesId.remove(estudianteId);
+        this.cantidadInscritos--;
+        if (this.cantidadInscritos < this.capacidad) {
+            this.estaCompleto = false;
+        }
+    }
+    public Profesor getProfesor() {
+        return profesor;
+    }
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
 }
