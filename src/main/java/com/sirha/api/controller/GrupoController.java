@@ -5,6 +5,7 @@ import com.sirha.api.model.Grupo;
 import com.sirha.api.service.GrupoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.repository.support.SimpleMongoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +91,11 @@ public class GrupoController {
             Grupo updatedGrupo = grupoService.addEstudianteToGrupo(grupoId, estudianteId);
             return ResponseEntity.ok(updatedGrupo);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(null);
         }
     }
 

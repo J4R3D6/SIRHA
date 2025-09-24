@@ -1,66 +1,85 @@
 package com.sirha.api.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+    import com.sirha.api.model.TipoSolicitud;
+    import jakarta.validation.constraints.NotBlank;
+    import jakarta.validation.constraints.NotNull;
+    import jakarta.validation.constraints.Size;
 
-public class SolicitudDTO {
+    public class SolicitudDTO {
 
-    @NotNull(message = "Las observaciones no pueden ser nulas")
-    @NotBlank(message = "Las observaciones no pueden estar vacías")
-    private String observaciones;
+        @NotBlank(message = "El ID del estudiante no puede estar vacío")
+        private String estudianteId;
 
-    @NotBlank(message = "El ID del estudiante no puede estar vacío")
-    @NotNull(message = "El ID del estudiante no puede ser nulo")
-    private String estudianteId;
+        @NotNull(message = "El tipo de solicitud no puede ser nulo")
+        private TipoSolicitud tipoSolicitud;
 
-    @NotBlank(message = "El tipo de solicitud no puede estar vacío")
-    @NotNull(message = "El tipo de solicitud no puede ser nulo")
-    private String tipoSolicitud;
+        @NotBlank(message = "El ID del grupo con problemas no puede estar vacío")
+        private String grupoProblemaId;
 
-    @NotBlank(message = "El ID del grupo problemático no puede estar vacío")
-    @NotNull(message = "El ID del grupo problemático no puede ser nulo")
-    private String grupoProblematicoId;
+        @NotBlank(message = "El acrónimo de la materia con problemas no puede estar vacío")
+        private String materiaProblemaAcronimo;
 
-    private String grupoCambioId;
+        // Para solicitudes de CAMBIO_GRUPO, estos campos serán obligatorios
+        private String grupoDestinoId;
+        private String materiaDestinoAcronimo;
 
+        @Size(max = 500, message = "Las observaciones no pueden exceder los 500 caracteres")
+        private String observaciones;
 
-    public String getObservaciones() {
-        return observaciones;
+        // Getters and setters
+        public String getEstudianteId() {
+            return estudianteId;
+        }
+
+        public void setEstudianteId(String estudianteId) {
+            this.estudianteId = estudianteId;
+        }
+
+        public TipoSolicitud getTipoSolicitud() {
+            return tipoSolicitud;
+        }
+
+        public void setTipoSolicitud(TipoSolicitud tipoSolicitud) {
+            this.tipoSolicitud = tipoSolicitud;
+        }
+
+        public String getGrupoProblemaId() {
+            return grupoProblemaId;
+        }
+
+        public void setGrupoProblemaId(String grupoProblemaId) {
+            this.grupoProblemaId = grupoProblemaId;
+        }
+
+        public String getMateriaProblemaAcronimo() {
+            return materiaProblemaAcronimo;
+        }
+
+        public void setMateriaProblemaAcronimo(String materiaProblemaAcronimo) {
+            this.materiaProblemaAcronimo = materiaProblemaAcronimo;
+        }
+
+        public String getGrupoDestinoId() {
+            return grupoDestinoId;
+        }
+
+        public void setGrupoDestinoId(String grupoDestinoId) {
+            this.grupoDestinoId = grupoDestinoId;
+        }
+
+        public String getMateriaDestinoAcronimo() {
+            return materiaDestinoAcronimo;
+        }
+
+        public void setMateriaDestinoAcronimo(String materiaDestinoAcronimo) {
+            this.materiaDestinoAcronimo = materiaDestinoAcronimo;
+        }
+
+        public String getObservaciones() {
+            return observaciones;
+        }
+
+        public void setObservaciones(String observaciones) {
+            this.observaciones = observaciones;
+        }
     }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    public String getTipoSolicitud() {
-        return tipoSolicitud;
-    }
-
-    public void setTipoSolicitud(String tipoSolicitud) {
-        this.tipoSolicitud = tipoSolicitud;
-    }
-
-    public String getEstudianteId() {
-        return estudianteId;
-    }
-
-    public void setEstudianteId(String estudianteId) {
-        this.estudianteId = estudianteId;
-    }
-
-    public String getGrupoProblematicoId() {
-        return grupoProblematicoId;
-    }
-
-    public void setGrupoProblematicoId(String grupoProblematicoId) {
-        this.grupoProblematicoId = grupoProblematicoId;
-    }
-
-    public String getGrupoCambioId() {
-        return grupoCambioId;
-    }
-
-    public void setGrupoCambioId(String grupoCambioId) {
-        this.grupoCambioId = grupoCambioId;
-    }
-}

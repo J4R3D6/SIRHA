@@ -107,10 +107,12 @@ public class Grupo {
 	}
 
     public void addEstudiante(String estudianteId) {
-        this.estudiantesId.add(estudianteId);
-        this.cantidadInscritos++;
-        if (this.cantidadInscritos >= this.capacidad) {
-            this.estaCompleto = true;
+        if (!this.estudiantesId.contains(estudianteId)) {
+            this.estudiantesId.add(estudianteId);
+            this.cantidadInscritos++;
+            if (this.cantidadInscritos >= this.capacidad) {
+                this.estaCompleto = true;
+            }
         }
     }
 

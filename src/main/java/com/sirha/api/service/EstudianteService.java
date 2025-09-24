@@ -25,34 +25,6 @@ public class EstudianteService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public Solicitud crearSolicitud(@Valid SolicitudDTO dto) {
-        Optional<Estudiante> estudianteOpt = usuarioRepository.findById(dto.getEstudianteId())
-                .filter(Estudiante.class::isInstance)
-                .map(Estudiante.class::cast);
-
-        if (estudianteOpt.isEmpty()) {
-            throw new IllegalArgumentException("El estudiante con ID " + dto.getEstudianteId() + " no existe");
-        }
-        Solicitud solicitud = new Solicitud();
-        solicitud.setObservaciones(dto.getObservaciones());
-        solicitud.setEstudianteId(dto.getEstudianteId());
-        solicitud.setGrupoProblematicoId(dto.getGrupoProblematicoId());
-        solicitud.setGrupoCambioId(dto.getGrupoCambioId());
-        TipoSolicitud tipo;
-        try {
-            tipo = TipoSolicitud.valueOf(dto.getTipoSolicitud());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("tipo no válido: " + dto.getTipoSolicitud() +
-                    ". INSCRIPCION_GRUPO, CAMBIO_GRUPO, CANCELACION_GRUPO");
-        }
-        solicitud.setTipoSolicitud(tipo);
-        Solicitud nuevaSolicitud = solicitudRepository.insert(solicitud);
-        Estudiante estudiante = estudianteOpt.get();
-        estudiante.addSolicitud(nuevaSolicitud);
-        usuarioRepository.save(estudiante);
-        return nuevaSolicitud;
-    }
-
     public List<RegistroMaterias> consultarHorarioBySemester(String idEstudiante, int semestre) {
         Optional<Estudiante> estudianteOpt = usuarioRepository.findById(idEstudiante)
                 .filter(Estudiante.class::isInstance)

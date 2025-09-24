@@ -26,16 +26,6 @@ public class EstudianteController {
         this.estudianteService = estudianteService;
     }
 
-    @PostMapping("/solitud")
-    public ResponseEntity crearSolicitud(@Valid @RequestBody SolicitudDTO dto) {
-        try {
-            Solicitud nuevo = estudianteService.crearSolicitud(dto);
-            return new ResponseEntity(HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(409).body(e.getMessage());
-        }
-    }
-
     @GetMapping("/horario/{idEstudiante}/{semestre}")
     public ResponseEntity<?> consultarHorarioPorSemestre(@PathVariable String idEstudiante, @PathVariable int semestre) {
         try {
