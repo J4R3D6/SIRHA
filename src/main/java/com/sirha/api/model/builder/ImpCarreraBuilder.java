@@ -13,7 +13,6 @@ public class ImpCarreraBuilder implements CarreraBuilder {
     private String codigo;
     private int duracionSemestres;
     private List<Materia> materias = new ArrayList<>();
-    private Map<Integer, List<Materia>> materiasPorSemestre;
     private int creditosTotales;
 
     @Override
@@ -40,11 +39,6 @@ public class ImpCarreraBuilder implements CarreraBuilder {
         return this;
     }
 
-    @Override
-    public CarreraBuilder materiasPorSemestre(Map<Integer, List<Materia>> materiasPorSemestre) {
-        this.materiasPorSemestre = materiasPorSemestre;
-        return this;
-    }
 
     @Override
     public CarreraBuilder creditosTotales(int creditos) {
@@ -54,7 +48,7 @@ public class ImpCarreraBuilder implements CarreraBuilder {
 
     @Override
     public Carrera build() {
-        Materia[] materiasList = materias != null ? materias.toArray(new Materia[0]) : null;
-        return new Carrera(nombre, codigo, duracionSemestres, materiasList, materiasPorSemestre, creditosTotales);
-    }
+        List<Materia> materiasList = materias != null ? new ArrayList<>(materias) : null;
+        return new Carrera(nombre, codigo, duracionSemestres, materiasList, creditosTotales);
+}
 }

@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +57,7 @@ public class DataSeedConfig {
                 programacion.setCreditos(3);
 
                 // Asociar materias a la carrera
-                ingenieriaSistemas.setMaterias(new Materia[]{calculo, programacion});
+                ingenieriaSistemas.setMaterias(Arrays.asList(calculo, calculo));
 
                 // Crear Horarios para Cálculo
                 Horario horarioCalculo1 = new Horario();

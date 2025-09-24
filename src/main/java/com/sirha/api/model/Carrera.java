@@ -1,31 +1,53 @@
 package com.sirha.api.model;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "carreras")
 public class Carrera {
 
-    private Facultad nombre; 
-    private String codigo; 
-    private int duracionSemestres; 
-    private Materia[] materias; 
-    private Map<Integer, List<Materia>> materiasPorSemestre; 
-    private int creditosTotales; 
+    @NotNull
+    @NotBlank
+    private Facultad nombre;
+
+    @Id
+    @NotNull
+    @NotBlank
+    private String codigo;
+
+    @NotNull
+    @NotBlank
+    private int duracionSemestres;
+
+    @NotBlank
+    @NotBlank
+    private int creditosTotales;
+
+    private List<Materia> materias = new ArrayList<>();
+    
 
     public Carrera() {}
 
+    public Carrera(Facultad nombre, String codigo, int duracionSemestres, int creditosTotales) {
+        this.nombre = nombre;
+        this.codigo = codigo;
+        this.duracionSemestres = duracionSemestres;
+        this.creditosTotales = creditosTotales;
+    }
+
     public Carrera(Facultad nombre, String codigo,
-                   int duracionSemestres, Materia[] materias,
-                   Map<Integer, List<Materia>> materiasPorSemestre,
-                   int creditosTotales) {
+                   int duracionSemestres, List<Materia> materias, int creditosTotales) {
         this.nombre = nombre;
         this.codigo = codigo;
         this.duracionSemestres = duracionSemestres;
         this.materias = materias;
-        this.materiasPorSemestre = materiasPorSemestre;
         this.creditosTotales = creditosTotales;
     }
 
@@ -55,20 +77,12 @@ public class Carrera {
         this.duracionSemestres = duracionSemestres;
     }
 
-    public Materia[] getMaterias() {
+    public List<Materia> getMaterias() {
         return materias;
     }
 
-    public void setMaterias(Materia[] materias) {
+    public void setMaterias(List<Materia> materias) {
         this.materias = materias;
-    }
-
-    public Map<Integer, List<Materia>> getMateriasPorSemestre() {
-        return materiasPorSemestre;
-    }
-
-    public void setMateriasPorSemestre(Map<Integer, List<Materia>> materiasPorSemestre) {
-        this.materiasPorSemestre = materiasPorSemestre;
     }
 
     public int getCreditosTotales() {
@@ -79,18 +93,22 @@ public class Carrera {
         this.creditosTotales = creditosTotales;
     }
 
-
-    public List<Materia> getMateriasDelSemestre(int semestre) {
-        return materiasPorSemestre != null ? materiasPorSemestre.get(semestre) : null;
-    }
-
     public int getTotalMaterias() {
-        return materias != null ? materias.length : 0;
+        return materias != null ? materias.size() : 0;
     }
 
     @Override
     public String toString() {
         return String.format("Carrera{nombre='%s', codigo='%s', duracion=%d semestres, materias=%d, creditos=%d}",
                 nombre, codigo, duracionSemestres, getTotalMaterias(), creditosTotales);
+    }
+
+    public void addMateria(Materia materia) {
+        for(Materia materia1 : materias) {
+            if(materia1.getAcronimo().equals(materia.getAcronimo())) {
+                throw new IllegalArgumentException("La materia con acronimo " + materia.getAcronimo() + " ya existe en la carrera " + this.codigo);
+            }
+        }
+        this.materias.add(materia);
     }
 }

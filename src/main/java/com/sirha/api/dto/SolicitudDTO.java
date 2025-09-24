@@ -24,7 +24,6 @@ public class SolicitudDTO {
     private String grupoCambioId;
 
 
-
     public String getObservaciones() {
         return observaciones;
     }

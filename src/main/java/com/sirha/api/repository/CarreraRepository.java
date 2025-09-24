@@ -4,6 +4,7 @@ import com.sirha.api.model.Carrera;
 import com.sirha.api.model.Facultad;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CarreraRepository extends MongoRepository<Carrera, String> {
 
-    List<Carrera> findByNombre(Facultad nombre);
-    Carrera findByCodigo(String codigo);
+    Optional<Carrera> findByNombre(Facultad nombre);
+    Optional<Carrera> findByCodigo(String codigo);
+    Optional<Carrera> findById(String id);
 }
