@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface SolicitudRepository extends MongoRepository<Solicitud, String> {
-    List<Solicitud> findByEstudiante_Id(String estudianteId);
+    List<Solicitud> findByEstudianteId(String estudianteId);
     List<Solicitud> findByEstado(String estado);
 }

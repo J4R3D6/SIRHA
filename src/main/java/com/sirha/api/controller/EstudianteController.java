@@ -4,7 +4,6 @@ import com.sirha.api.dto.SolicitudDTO;
 import com.sirha.api.dto.UsuarioDTO;
 import com.sirha.api.model.*;
 import com.sirha.api.service.EstudianteService;
-import com.sirha.api.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,6 +57,42 @@ public class EstudianteController {
             } else {
                 return new ResponseEntity<>("No se encontro el horario", HttpStatus.NO_CONTENT);
             }
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/solicitudes")
+    public ResponseEntity<?> crearSolicitud(@Valid @RequestBody SolicitudDTO solicitudDTO) {
+        try {
+            Solicitud solicitudCreada = estudianteService.crearSolicitud(solicitudDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body(solicitudCreada);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al procesar la solicitud: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/solicitudes/{idEstudiante}")
+    public ResponseEntity<?> consultarSolicitudes(@PathVariable String idEstudiante) {
+        try {
+            List<Solicitud> solicitudes = estudianteService.consultarSolicitudes(idEstudiante);
+            if (!solicitudes.isEmpty()) {
+                return ResponseEntity.ok(solicitudes);
+            } else {
+                return new ResponseEntity<>("No se encontraron Solicitudes", HttpStatus.NO_CONTENT);
+            }
+        }catch (IllegalArgumentException e) {
+            return ResponseEntity.status(409).body(e.getMessage());
+        }
+    }
+    @GetMapping("/solicitudes/{idEstudiante}/{solicitudId}")
+    public ResponseEntity<?> consultarSolicitudesPorId(@PathVariable String idEstudiante, @PathVariable String solicitudId) {
+        try {
+            Solicitud solicitud = estudianteService.consultarSolicitudesById(idEstudiante, solicitudId);
+            return ResponseEntity.ok(solicitud);
         }catch (IllegalArgumentException e) {
             return ResponseEntity.status(409).body(e.getMessage());
         }

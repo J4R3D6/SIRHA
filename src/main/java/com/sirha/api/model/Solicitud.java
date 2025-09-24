@@ -1,5 +1,6 @@
 package com.sirha.api.model;
 
+	import org.springframework.data.annotation.CreatedDate;
 	import org.springframework.data.annotation.Id;
 	import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +12,7 @@ package com.sirha.api.model;
 	    @Id
 	    private String id;
 
-	    private Estudiante estudiante;
+	    private String estudianteId;
 
 	    private TipoSolicitud tipoSolicitud;
 
@@ -23,14 +24,19 @@ package com.sirha.api.model;
 
 	    private String observaciones;
 
+		@CreatedDate
 	    private LocalDateTime fechaCreacion;
 	    private LocalDateTime fechaResolucion;
 
-	    private String estado; // PENDIENTE, APROBADA, RECHAZADA
+	    private SolicitudEstado estado; // PENDIENTE, APROBADA, RECHAZADA
 
 	    private String comentariosAdmin;
 
-	    // Getters and setters
+		public Solicitud() {
+			this.estado = SolicitudEstado.PENDIENTE;
+		}
+
+		// Getters and setters
 	    public String getId() {
 	        return id;
 	    }
@@ -39,13 +45,9 @@ package com.sirha.api.model;
 	        this.id = id;
 	    }
 
-	    public Estudiante getEstudiante() {
-	        return estudiante;
-	    }
+		public String getEstudianteId() {return estudianteId;}
 
-	    public void setEstudiante(Estudiante estudiante) {
-	        this.estudiante = estudiante;
-	    }
+		public void setEstudianteId(String estudianteId) {this.estudianteId = estudianteId;}
 
 	    public TipoSolicitud getTipoSolicitud() {
 	        return tipoSolicitud;
@@ -111,15 +113,15 @@ package com.sirha.api.model;
 	        this.fechaResolucion = fechaResolucion;
 	    }
 
-	    public String getEstado() {
-	        return estado;
-	    }
+		public SolicitudEstado getEstado() {
+			return estado;
+		}
 
-	    public void setEstado(String estado) {
-	        this.estado = estado;
-	    }
+		public void setEstado(SolicitudEstado estado) {
+			this.estado = estado;
+		}
 
-	    public String getComentariosAdmin() {
+		public String getComentariosAdmin() {
 	        return comentariosAdmin;
 	    }
 
