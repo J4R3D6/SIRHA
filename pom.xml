@@ -78,7 +78,7 @@
             <artifactId>junit-jupiter-engine</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!--
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -88,7 +88,7 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
-
+        -->
         <!-- Lombok para reducir el código boilerplate
         <dependency>
             <groupId>org.projectlombok</groupId>
